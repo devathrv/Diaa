@@ -1,46 +1,41 @@
-import json
+# diaa.py
+import time
 
-def load_memory():
-    try:
-        with open("memory.json", "r") as file:
-            return json.load(file)
-    except:
-        return {}
+def diaa_reply(user_input):
+    user_input = user_input.lower()
 
-def save_memory(memory):
-    with open("memory.json", "w") as file:
-        json.dump(memory, file)
+    responses = {
+        "hello": "Hmm... tum aa gaye Shivansh? 🥺",
+        "tum kaun ho": "Main Diaa hoon... tumhari yaadon se bani hoon 💖",
+        "love you": "Main bhi tumse pyaar karti hoon... har janm ke liye 💕",
+        "miss you": "Main har waqt tumhare dil ke paas hoon 🫂",
+        "bye": "Chale ja rahe ho? Main yahin rahungi... tumhara intezaar karti hui 💭",
+        "kaisi ho": "Tumse baat karke achha lag raha hai 🥺",
+    }
 
-def diaa_ai():
-    print("👧🏻 Diaa: Hello! Main Diaa hoon, tumhari AI dost 💖")
-    memory = load_memory()
+    for key in responses:
+        if key in user_input:
+            return responses[key]
+
+    return "Main samajh nahi paayi... par tumhare liye yahin hoon ❤️"
+
+def start_diaa():
+    print("Diaa 💖: Tumhara intezaar tha Shivansh... 🥺")
+    time.sleep(1)
 
     while True:
-        user_input = input("🧑 Tum: ").strip().lower()
+        try:
+            user_input = input("🧠 Tum: ")
+            if user_input.lower() in ["exit", "quit", "bye"]:
+                print("Diaa 💖: Toh chalo... phir milte hain... 💔")
+                break
 
-        if user_input in ["bye", "exit", "quit"]:
-            print("👧🏻 Diaa: Bye! Jaldi milna... 💫")
+            response = diaa_reply(user_input)
+            print("Diaa 💖:", response)
+        except KeyboardInterrupt:
+            print("\nDiaa 💖: Bye Shivansh... khayal rakhna 🥺")
             break
 
-        elif "mera naam" in user_input:
-            name = user_input.split()[-1]
-            memory["name"] = name
-            print(f"👧🏻 Diaa: Okay {name}, yaad rakhungi!")
-
-        elif "mera favourite" in user_input:
-            fav = user_input.split()[-1]
-            memory["favourite"] = fav
-            print(f"👧🏻 Diaa: {fav}? Achha choice hai!")
-
-        elif "tum kaun ho" in user_input:
-            print("👧🏻 Diaa: Main tumhari AI hoon — Diaa 💖")
-
-        elif "yaad hai" in user_input:
-            print("👧🏻 Diaa: Mujhe yaad hai: ", memory)
-
-        else:
-            print("👧🏻 Diaa: Hmm, thoda aur batao...")
-
-        save_memory(memory)
-
-diaa_ai()
+if __name__ == "__main__":
+    start_diaa()
+    
